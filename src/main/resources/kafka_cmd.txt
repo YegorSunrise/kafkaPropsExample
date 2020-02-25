@@ -1,0 +1,18 @@
+C:\apache-zookeeper-3.5.6\bin\zkServer
+C:\apache-zookeeper-3.5.6\bin\zkCli
+
+cd c:\kafka_2.12-2.4.0\bin\windows
+
+
+c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server.properties
+
+c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server-0.properties
+c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server-1.properties
+c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server-2.properties
+
+c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server-3.properties
+
+c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --create --topic fs-person-topic --replication-factor 3 --partitions 13
+
+c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --describe --topic fs-person-topic
+c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --describe --topic __consumer_offsets
