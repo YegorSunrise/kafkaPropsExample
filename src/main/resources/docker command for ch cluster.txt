@@ -1,0 +1,75 @@
+CREATE TABLE mytb (id UInt32, d Date) ENGINE = ReplicatedMergeTree('/clickhouse/tables/mytb', '01', d, (d, id), 8192);
+
+
+
+
+CREATE TABLE mcr (id UInt32, d Date) ENGINE = ReplicatedMergeTree('/clickhouse/tables/{shard}/mcr', '{replica}', d, (d, id), 8192);
+
+
+
+
+CREATE TABLE mcrc on cluster '{cluster}' (id UInt32, d Date) ENGINE = ReplicatedMergeTree('/clickhouse/{cluster}/tables/mcrc', '{replica}', d, (d, id), 8192);
+
+
+docker zookeeper commands:
+
+winpty docker run -it --name ubzk ubuntu bash
+apt-get update && apt-get install nano
+ apt-get install default-jre  8 34
+ apt-get install wget
+ cd /opt
+ wget https://apache-mirror.rbc.ru/pub/apache/zookeeper/zookeeper-3.6.1/apache-zookeeper-3.6.1-bin.tar.gz
+ tar -xvf apache-zookeeper-3.6.1-bin.tar.gz
+
+nano /opt/apache-zookeeper-3.6.1-bin/conf/zoo.cfg
+
+ tickTime=2000
+ dataDir=/var/zookeeper
+ clientPort=2181
+ maxClientCnxns=60
+ autopurge.purgeInterval=1
+ initLimit=5
+ syncLimit=2
+ server.1=zoo1:2888:3888
+
+bash /opt/apache-zookeeper-3.6.1-bin/bin/zkServer.sh start
+
+--------------------------------------------------
+
+docker ch commands:
+
+winpty docker run -it -p 6666:9000 --name ubch01 ubuntu bash
+apt-get update && apt-get install nano
+apt-get install apt-transport-https ca-certificates dirmngr
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E0C56BD4
+echo "deb https://repo.clickhouse.tech/deb/stable/ main/" | tee /etc/apt/sources.list.d/clickhouse.list
+apt-get update
+apt-get install -y clickhouse-server clickhouse-client
+
+ nano /etc/clickhouse-server/config.xml
+
+<zookeeper>
+    <node>
+            <host>172.17.0.2</host>
+            <port>2181</port>
+    </node>
+</zookeeper>
+<macros>
+    <cluster>myCluster</cluster>
+    <replica>ch01</replica>
+    <shard>12</shard>
+</macros>
+
+<macros>
+ <cluster>docCluster</cluster>
+ <replica>doc01</replica>
+ <shard>123</shard>
+</macros>
+
+
+service clickhouse-server start
+clickhouse-client
+
+tail -f /var/log/clickhouse-server/clickhouse-server.log
+
+ winpty docker run -it --rm --link ch01:clickhouse-server yandex/clickhouse-client --host 172.17.0.3

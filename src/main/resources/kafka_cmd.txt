@@ -13,6 +13,8 @@ c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\confi
 c:\kafka_2.12-2.4.0\bin\windows\kafka-server-start.bat C:\kafka_2.12-2.4.0\config\server-3.properties
 
 c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --create --topic fs-person-topic --replication-factor 3 --partitions 13
+c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --create --topic backup-topic --replication-factor 3 --partitions 13
 
 c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --describe --topic fs-person-topic
+c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --describe --topic backup-topic
 c:\kafka_2.12-2.4.0\bin\windows\kafka-topics.bat --zookeeper localhost:2181 --describe --topic __consumer_offsets

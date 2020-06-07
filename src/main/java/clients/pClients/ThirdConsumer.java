@@ -1,4 +1,4 @@
-package clients;
+package clients.pClients;
 
 public class ThirdConsumer {
     public static void main(String[] args) {

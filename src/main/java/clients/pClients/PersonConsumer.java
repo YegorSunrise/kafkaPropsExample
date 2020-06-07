@@ -1,17 +1,13 @@
-package clients;
+package clients.pClients;
 
 import entity.Person;
-import kafka.tools.ConsoleConsumer;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
-import org.apache.kafka.clients.consumer.ConsumerPartitionAssignor;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.clients.consumer.internals.ConsumerCoordinator;
 import org.apache.kafka.common.serialization.StringDeserializer;
-import org.omg.CORBA.CODESET_INCOMPATIBLE;
 import service.PersonStorage;
 import util.PersonDeserializer;
 import util.PropertyHolder;
@@ -38,7 +34,7 @@ public class PersonConsumer {
         consumerProperties.put(ConsumerConfig.RECONNECT_BACKOFF_MS_CONFIG, 1000);
         consumerProperties.put(ConsumerConfig.RECONNECT_BACKOFF_MAX_MS_CONFIG, 50);
         consumer = new KafkaConsumer<>(consumerProperties);
-        consumer.subscribe(Collections.singleton(PropertyHolder.TOPIC));
+        consumer.subscribe(Collections.singleton(PropertyHolder.PERSON_TOPIC));
     }
 
     public void runConsumer() {

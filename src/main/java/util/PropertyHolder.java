@@ -7,7 +7,8 @@ import java.util.Properties;
 public class PropertyHolder {
     private static Properties adminProperties = new Properties();
 
-    public static final String TOPIC = "fs-person-topic";
+    public static final String PERSON_TOPIC = "fs-person-topic";
+    public static final String BACKUP_TOPIC = "backup-topic";
     public final static String BOOTSTRAP_SERVERS = "localhost:9094,localhost:9092,localhost:9093";
 
     private PropertyHolder() {
